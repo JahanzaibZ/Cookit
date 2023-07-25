@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'utils/app_theme.dart';
+import './utils/app_theme.dart';
+import './views/category_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -16,20 +17,7 @@ class MyApp extends StatelessWidget {
       theme: appTheme(),
       darkTheme: appTheme(isDark: true),
       title: "Cookit",
-      home: const HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Home Screen'),
-      ),
+      home: const CategoryScreen(),
     );
   }
 }

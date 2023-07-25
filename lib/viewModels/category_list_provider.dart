@@ -9,9 +9,16 @@ final categoryListProvider =
 
 class CategoryListNotifier extends StateNotifier<List<Category>> {
   CategoryListNotifier() : super([]);
+  var isLoading = false;
+  var isInit = true;
 
   Future<void> fectchCategoryList() async {
-    final categoryList = await ApiService.fetchAllCategoriesFromAPI();
-    state = categoryList;
+    if (isInit) {
+      isLoading = true;
+      final categoryList = await ApiService.fetchAllCategoriesFromAPI();
+      state = categoryList;
+      isLoading = false;
+      isInit = false;
+    }
   }
 }
