@@ -8,28 +8,60 @@ class CategoryScreen extends ConsumerWidget {
 
   const CategoryScreen({super.key});
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget scaffoldBody(WidgetRef ref) {
     final categoryList = ref.watch(categoryListProvider);
-    final categoryListNotifier = ref.read(categoryListProvider.notifier);
-    categoryListNotifier.fectchCategoryList();
-    return Scaffold(
-      body: categoryListNotifier.isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : GridView.builder(
-              itemCount: categoryList.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
-              itemBuilder: (context, index) => Card(
-                child: FadeInImage(
-                  placeholder: const AssetImage(
-                      'assets/images/category_placeholder.jpg'),
-                  image: NetworkImage(categoryList[index].thumbnailURL),
-                ),
+    final isLoading = ref.watch(categoryListLoading);
+    final error = ref.watch(categoryListError);
+    if (isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (error != null) {
+      return SizedBox(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                error,
+                textAlign: TextAlign.center,
               ),
             ),
+            TextButton(
+              onPressed: () => ref
+                  .read(categoryListProvider.notifier)
+                  .fetchCategoryList(again: true),
+              child: const Text('Try Again'),
+            )
+          ],
+        ),
+      );
+    } else {
+      return GridView.builder(
+        itemCount: categoryList.length,
+        gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (context, index) => Card(
+          child: FadeInImage(
+            placeholder:
+                const AssetImage('assets/images/category_placeholder.jpg'),
+            image: NetworkImage(categoryList[index].thumbnailURL),
+          ),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    Future.delayed(
+      Duration.zero,
+      () => ref.read(categoryListProvider.notifier).fetchCategoryList(),
+    );
+    return Scaffold(
+      body: scaffoldBody(ref),
     );
   }
 }
