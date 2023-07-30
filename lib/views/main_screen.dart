@@ -32,15 +32,23 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isDarkMode = mediaQuery.platformBrightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Cookit',
-          textScaleFactor: 1.5,
+        title: Image.asset(
+          isDarkMode
+              ? 'assets/icons/icon_light.png'
+              : 'assets/icons/icon_dark.png',
+          height: 35,
+          width: 35,
         ),
+        centerTitle: true,
       ),
-      body: currentIndex == 0 ? const HomeTab() : const FavoritesTab(),
+      body: currentIndex == 0 ? HomeTab(mediaQuery) : FavoritesTab(mediaQuery),
       bottomNavigationBar: BottomNavigationBar(
+          iconSize:
+              22, // Default icon size was causing navigation bar to take more height
           showUnselectedLabels: false,
           currentIndex: currentIndex,
           onTap: (value) => setState(() => currentIndex = value),
