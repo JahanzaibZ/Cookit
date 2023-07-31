@@ -30,6 +30,19 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   var currentIndex = 0;
 
+  Widget scaffoldBody() {
+    final isLoading =
+        ref.watch(categoryListLoading) || ref.watch(mealListLoading);
+    final error = ref.watch(categoryListError) ?? ref.watch(mealListError);
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (error != null) {
+      return Container();
+    } else {
+      return currentIndex == 0 ? const HomeTab() : const FavoritesTab();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -45,7 +58,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ),
         centerTitle: true,
       ),
-      body: currentIndex == 0 ? HomeTab(mediaQuery) : FavoritesTab(mediaQuery),
+      body: scaffoldBody(),
       bottomNavigationBar: BottomNavigationBar(
           iconSize:
               22, // Default icon size was causing navigation bar to take more height

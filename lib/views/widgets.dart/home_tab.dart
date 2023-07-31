@@ -3,103 +3,135 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../viewModels/category_list_provider.dart';
 import '../../viewModels/meal_list_provider.dart';
+import './meal_card.dart';
 
 class HomeTab extends ConsumerWidget {
-  final MediaQueryData mediaQuery;
-
-  const HomeTab(this.mediaQuery, {super.key});
+  const HomeTab({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scaffoldBodyHeight = mediaQuery.size.height -
-        mediaQuery.padding.vertical -
-        kToolbarHeight -
-        kBottomNavigationBarHeight;
     final categoryList = ref.watch(categoryListProvider);
+    final mealList = ref.watch(mealListProvider);
     final randomMealList = ref.watch(randomMealListProvider);
-    debugPrint(
-        'Home Tab Scaffold Body Height: $scaffoldBodyHeight, Device Height: ${mediaQuery.size.height}, Padding Vertical: ${mediaQuery.padding.vertical}, Toolbar Height: $kToolbarHeight, Bottom Bar Height: $kBottomNavigationBarHeight'); // Added for debugging
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      height: scaffoldBodyHeight,
-      width: mediaQuery.size.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: scaffoldBodyHeight * .05,
-            width: mediaQuery.size.width,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Categories',
-                  textScaleFactor: 1.5,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_right_alt_rounded),
-                )
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SearchBar(
+              hintText: 'Search',
+              leading: Icon(Icons.search),
             ),
-          ),
-          SizedBox(
-            height: scaffoldBodyHeight * .1,
-            width: mediaQuery.size.width,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: categoryList.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 120,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withOpacity(.05),
-                    borderRadius: BorderRadius.circular(25),
+            Container(
+              height: 50,
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Categories',
+                    textScaleFactor: 1.5,
                   ),
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.all(5),
-                  child: Center(
-                    child: FittedBox(
-                      child: Text(categoryList[index].name),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_right_alt_rounded),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 75,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categoryList.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.brightness ==
+                              Brightness.light
+                          ? const Color.fromARGB(255, 240, 240, 240)
+                          : const Color.fromARGB(255, 50, 50, 50),
+                      borderRadius: BorderRadius.circular(25),
                     ),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(5),
+                    child: Center(
+                      child: FittedBox(
+                        child: Text(categoryList[index].name),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Container(
+              height: 50,
+              margin: const EdgeInsets.only(top: 40, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Popular Meals',
+                    textScaleFactor: 1.5,
                   ),
-                );
-              },
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_right_alt_rounded),
+                  )
+                ],
+              ),
             ),
-          ),
-          Container(
-            height: scaffoldBodyHeight * .05,
-            width: mediaQuery.size.width,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Popular Meals',
-                  textScaleFactor: 1.5,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_right_alt_rounded),
-                )
-              ],
+            SizedBox(
+              height: 250,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MealTile(meal: randomMealList[0]),
+                  MealTile(meal: randomMealList[1])
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: scaffoldBodyHeight * .4,
-            width: mediaQuery.size.width,
-            child: ListView.builder(
-              itemCount: randomMealList.length,
-              itemBuilder: (context, index) {
-                return Container();
-              },
+            Container(
+              height: 50,
+              margin: const EdgeInsets.only(top: 40, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'All Meals',
+                    textScaleFactor: 1.5,
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_right_alt_rounded),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+            SizedBox(
+              height: 250,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MealTile(meal: mealList[2]),
+                  MealTile(meal: mealList[3])
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 250,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MealTile(meal: mealList[4]),
+                  MealTile(meal: mealList[5])
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

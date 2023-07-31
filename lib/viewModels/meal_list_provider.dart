@@ -5,26 +5,25 @@ import '../models/meal.dart';
 import '../services/api_service.dart';
 
 final mealListLoading = StateProvider<bool>(
-  (ref) => false,
+  (ref) => true,
 );
 
 final mealListError = StateProvider<String?>(
   (ref) => null,
 );
 
-final mealListProvider = StateNotifierProvider<MealListNotifier, List<Meal>>(
-    (ref) => MealListNotifier(ref));
-
 final randomMealListProvider = Provider<List<Meal>>(
   (ref) {
     final mealList = ref.watch(mealListProvider);
-    final newList = <Meal>[];
+    var newList = <Meal>[];
     final random = Random();
-    while (newList.length == 4) {
+    while (mealList.isNotEmpty && newList.length < 6) {
       final randomNum = random.nextInt(10);
-      for (final meal in newList) {
-        if (meal.id == newList[randomNum].id) {
-          continue;
+      if (newList.isNotEmpty || mealList.isNotEmpty) {
+        for (final meal in newList) {
+          if (meal.id == mealList[randomNum].id) {
+            continue;
+          }
         }
       }
       newList.add(mealList[randomNum]);
@@ -32,6 +31,9 @@ final randomMealListProvider = Provider<List<Meal>>(
     return newList;
   },
 );
+
+final mealListProvider = StateNotifierProvider<MealListNotifier, List<Meal>>(
+    (ref) => MealListNotifier(ref));
 
 class MealListNotifier extends StateNotifier<List<Meal>> {
   var _isInit = true;

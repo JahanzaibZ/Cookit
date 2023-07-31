@@ -42,7 +42,7 @@ class Meal {
       id: json['idMeal'],
       name: json['strMeal'],
       category: json['strCategory'],
-      thumbnailURL: json[''],
+      thumbnailURL: json['strMealThumb'],
       ingredients: strIngredients,
       measurements: strMeasurements,
       instructions: json['strInstructions'],

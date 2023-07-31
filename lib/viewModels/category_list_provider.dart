@@ -4,7 +4,7 @@ import '../models/category.dart';
 import '../services/api_service.dart';
 
 final categoryListLoading = StateProvider<bool>(
-  (ref) => false,
+  (ref) => true,
 );
 
 final categoryListError = StateProvider<String?>(
