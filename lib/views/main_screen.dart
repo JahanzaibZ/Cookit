@@ -5,6 +5,7 @@ import '../viewModels/category_list_provider.dart';
 import '../viewModels/meal_list_provider.dart';
 import './widgets.dart/home_tab.dart';
 import './widgets.dart/favorites_tab.dart';
+import './widgets.dart/error_message.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   static const routeName = '/category-screen';
@@ -37,7 +38,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     } else if (error != null) {
-      return Container();
+      return ErrorMessage(
+        errorMessage: error,
+      );
     } else {
       return currentIndex == 0 ? const HomeTab() : const FavoritesTab();
     }

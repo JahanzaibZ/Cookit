@@ -18,12 +18,17 @@ final randomMealListProvider = Provider<List<Meal>>(
     var newList = <Meal>[];
     final random = Random();
     while (mealList.isNotEmpty && newList.length < 6) {
-      final randomNum = random.nextInt(10);
-      if (newList.isNotEmpty || mealList.isNotEmpty) {
+      final randomNum = random.nextInt(15);
+      var mealExists = false;
+      if (newList.isNotEmpty && mealList.isNotEmpty) {
         for (final meal in newList) {
           if (meal.id == mealList[randomNum].id) {
-            continue;
+            mealExists = true;
           }
+        }
+        if (mealExists) {
+          mealExists = false;
+          continue;
         }
       }
       newList.add(mealList[randomNum]);

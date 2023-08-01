@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../viewModels/category_list_provider.dart';
 import '../../viewModels/meal_list_provider.dart';
 import './meal_card.dart';
+import 'category_list.dart';
 
 class HomeTab extends ConsumerWidget {
   const HomeTab({super.key});
@@ -40,32 +41,7 @@ class HomeTab extends ConsumerWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 75,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: categoryList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 120,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.brightness ==
-                              Brightness.light
-                          ? const Color.fromARGB(255, 240, 240, 240)
-                          : const Color.fromARGB(255, 50, 50, 50),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.all(5),
-                    child: Center(
-                      child: FittedBox(
-                        child: Text(categoryList[index].name),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            CategoryList(categoryList: categoryList),
             Container(
               height: 50,
               margin: const EdgeInsets.only(top: 40, bottom: 10),
@@ -88,8 +64,8 @@ class HomeTab extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  MealTile(meal: randomMealList[0]),
-                  MealTile(meal: randomMealList[1])
+                  MealCard(meal: randomMealList[0]),
+                  MealCard(meal: randomMealList[1])
                 ],
               ),
             ),
@@ -115,8 +91,8 @@ class HomeTab extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  MealTile(meal: mealList[2]),
-                  MealTile(meal: mealList[3])
+                  MealCard(meal: mealList[2]),
+                  MealCard(meal: mealList[3])
                 ],
               ),
             ),
@@ -125,8 +101,8 @@ class HomeTab extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  MealTile(meal: mealList[4]),
-                  MealTile(meal: mealList[5])
+                  MealCard(meal: mealList[4]),
+                  MealCard(meal: mealList[5])
                 ],
               ),
             ),
