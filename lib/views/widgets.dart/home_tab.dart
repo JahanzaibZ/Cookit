@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../viewModels/category_list_provider.dart';
 import '../../viewModels/meal_list_provider.dart';
+import '../meals_screen.dart';
 import './meal_card.dart';
-import 'category_list.dart';
+import './category_list.dart';
 
 class HomeTab extends ConsumerWidget {
   const HomeTab({super.key});
@@ -80,7 +81,10 @@ class HomeTab extends ConsumerWidget {
                     textScaleFactor: 1.5,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    style: IconButton.styleFrom(
+                        splashFactory: NoSplash.splashFactory),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed(MealsScreen.routeName),
                     icon: const Icon(Icons.arrow_right_alt_rounded),
                   )
                 ],

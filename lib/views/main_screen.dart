@@ -39,6 +39,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       return const Center(child: CircularProgressIndicator());
     } else if (error != null) {
       return ErrorMessage(
+        fetchCategory:
+            ref.read(categoryListProvider.notifier).fetchCategoryList,
+        fetchMeals: ref.read(mealListProvider.notifier).fetchMealList,
         errorMessage: error,
       );
     } else {
