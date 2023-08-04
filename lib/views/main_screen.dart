@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../viewModels/category_list_provider.dart';
 import '../viewModels/meal_list_provider.dart';
 import './widgets.dart/home_tab.dart';
-import './widgets.dart/favorites_tab.dart';
 import './widgets.dart/error_message.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
@@ -29,8 +28,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     super.initState();
   }
 
-  var currentIndex = 0;
-
   Widget scaffoldBody() {
     final isLoading =
         ref.watch(categoryListLoading) || ref.watch(mealListLoading);
@@ -45,7 +42,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         errorMessage: error,
       );
     } else {
-      return currentIndex == 0 ? const HomeTab() : const FavoritesTab();
+      return const HomeTab();
     }
   }
 
@@ -65,26 +62,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         centerTitle: true,
       ),
       body: scaffoldBody(),
-      bottomNavigationBar: BottomNavigationBar(
-          iconSize:
-              22, // Default icon size was causing navigation bar to take more height
-          showUnselectedLabels: false,
-          currentIndex: currentIndex,
-          onTap: (value) => setState(() => currentIndex = value),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.favorite,
-              ),
-              label: 'Favorites',
-            ),
-          ]),
     );
   }
 }

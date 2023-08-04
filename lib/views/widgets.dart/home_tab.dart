@@ -79,7 +79,6 @@ class StaticColumn extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryList = ref.watch(categoryListProvider);
-    final mealList = ref.watch(mealListProvider);
     final randomMealList = ref.watch(randomMealListProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,8 +132,8 @@ class StaticColumn extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              MealCard(meal: mealList[2]),
-              MealCard(meal: mealList[3])
+              MealCard(meal: randomMealList[2]),
+              MealCard(meal: randomMealList[3])
             ],
           ),
         ),
@@ -143,8 +142,8 @@ class StaticColumn extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              MealCard(meal: mealList[4]),
-              MealCard(meal: mealList[5])
+              MealCard(meal: randomMealList[4]),
+              MealCard(meal: randomMealList[5])
             ],
           ),
         ),

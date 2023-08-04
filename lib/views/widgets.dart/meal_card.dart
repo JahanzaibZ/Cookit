@@ -18,7 +18,7 @@ class MealCard extends StatelessWidget {
       onTap: () => Navigator.of(context)
           .pushNamed(MealDetailScreen.routeName, arguments: meal),
       child: Container(
-        height: 215, // Will be ignored if used in Gridview
+        height: 180, // Will be ignored if used in Gridview
         width: 180, // Will be ignored if used in Gridview
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.brightness == Brightness.light
@@ -30,9 +30,8 @@ class MealCard extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+                borderRadius: BorderRadius.circular(
+                  20,
                 ),
                 border: Border.all(
                     color: Theme.of(context).colorScheme.brightness ==
@@ -42,12 +41,7 @@ class MealCard extends StatelessWidget {
                     width: 1),
               ),
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  // bottomLeft: Radius.circular(10),
-                  // bottomRight: Radius.circular(10),
-                ),
+                borderRadius: BorderRadius.circular(20),
                 child: FadeInImage.assetNetwork(
                   fit: BoxFit.contain,
                   placeholder: 'assets/images/meal_placeholder.jpg',
@@ -70,27 +64,23 @@ class MealCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.brightness ==
                           Brightness.light
-                      ? lightColor
-                      : darkColor,
+                      ? lightColor.withOpacity(.75)
+                      : darkColor.withOpacity(.75),
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
                   ),
                   border: Border.all(
                       color: Theme.of(context).colorScheme.brightness ==
                               Brightness.light
                           ? lightColor
                           : darkColor,
-                      width: 1),
+                      width: 0),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(meal.name),
-                    const Icon(Icons.favorite_border_outlined)
-                  ],
+                child: Center(
+                  child: Text(meal.name),
                 ),
               ),
             ),

@@ -1,5 +1,6 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/meal.dart';
 import '../services/api_service.dart';
@@ -24,12 +25,13 @@ final randomMealListProvider = Provider<List<Meal>>(
         for (final meal in newList) {
           if (meal.id == mealList[randomNum].id) {
             mealExists = true;
+            break;
           }
         }
-        if (mealExists) {
-          mealExists = false;
-          continue;
-        }
+      }
+      if (mealExists) {
+        mealExists = false;
+        continue;
       }
       newList.add(mealList[randomNum]);
     }

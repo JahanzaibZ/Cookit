@@ -22,20 +22,30 @@ class MealsScreen extends ConsumerWidget {
         title: Text(categoryStr ?? 'All Meals'),
         centerTitle: true,
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: .85,
-              crossAxisCount: 2,
-              crossAxisSpacing: 15,
-              mainAxisSpacing: 25),
-          itemCount: mealsList.length,
-          itemBuilder: (context, index) {
-            return MealCard(meal: mealsList[index]);
-          },
-        ),
-      ),
+      body: mealsList.isEmpty
+          ? const Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Sorry,\nNo Meals available at the moment!',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+          : Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 25,
+                ),
+                itemCount: mealsList.length,
+                itemBuilder: (context, index) {
+                  return MealCard(meal: mealsList[index]);
+                },
+              ),
+            ),
     );
   }
 }
