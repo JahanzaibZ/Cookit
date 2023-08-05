@@ -100,11 +100,17 @@ class StaticColumn extends ConsumerWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: GridView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 25,
+            ),
             children: [
               MealCard(meal: randomMealList[0]),
-              MealCard(meal: randomMealList[1])
+              MealCard(meal: randomMealList[1]),
             ],
           ),
         ),
@@ -128,22 +134,20 @@ class StaticColumn extends ConsumerWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: GridView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 25,
+            ),
             children: [
               MealCard(meal: randomMealList[2]),
-              MealCard(meal: randomMealList[3])
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
+              MealCard(meal: randomMealList[3]),
               MealCard(meal: randomMealList[4]),
-              MealCard(meal: randomMealList[5])
+              MealCard(meal: randomMealList[5]),
             ],
           ),
         ),
